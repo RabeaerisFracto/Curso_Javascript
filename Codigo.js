@@ -171,5 +171,3 @@ console.assert(5<2); //si FALSE sale error en consola, si TRUE no pasa nada.
 console.table(marcas);
 console.log();
 console.timeEnd();
-
-
