@@ -142,7 +142,7 @@ mod1.forEach(paraEach => {
     return(document.write("<br>" + paraEach.slice(0,2) + paraEach.charAt(2).toUpperCase() + paraEach.slice(3)))
 }); //slice para cortar frase hasta posicion de charAt, luego resto de frace con slice desde 1+ de charAt
 
-let marcas = ["PlayStation","Edifier","LG","HP","Sapphire","Ryzen","Asus"];
+let marcas = ["PlayStation","Razer","Edifier","LG","HP","Sapphire","Ryzen","Asus"];
 // function cincoLet(desk){
 //     return (desk.length > 4);
 // }
@@ -161,16 +161,27 @@ document.write(vals);
 let objMath = (Math.sqrt(25) + Math.cbrt(27)) - (Math.max(1,3,5) - Math.min(1,3,5))
 document.write(objMath);
 let objMath2 = Math.round(Math.random()*10) - Math.floor(1.8) * Math.trunc(1.98565564687987)
-document.write(objMath2);
+document.write(objMath2 + "<br>");
 
 
-// CONSOLA
-console.time();
-console.groupCollapsed("prueba");
-console.assert(5<2); //si FALSE sale error en consola, si TRUE no pasa nada.
-console.table(marcas);
-console.log();
-console.timeEnd();
+// DOM
+
+function pruebaOnload(){
+    const titulo = document.getElementById("parrafo");
+    titulo.setAttribute("contentEditable","true");
+    titulo.setAttribute("title","prueba titulo")
+}
+function pruebaOnload2(){
+    const buscador = document.getElementById("typeChange");
+    buscador.inpu
+}
+
+window.onload = function(){
+    pruebaOnload()
+    // const pruebaInput = document.getElementById("#typeChange");
+    // document.write(pruebaInput)
+    // pruebaInput.setAttribute("hidden","true")
+};
 
 
 // CONSOLA
