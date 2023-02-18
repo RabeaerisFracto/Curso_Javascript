@@ -170,14 +170,28 @@ function pruebaOnload(){
     const titulo = document.getElementById("parrafo");
     titulo.setAttribute("contentEditable","true");
     titulo.setAttribute("title","prueba titulo")
+    titulo.style.color = "#5bb"
+    titulo.style.backgroundColor = "#d99"
+    titulo.style.padding = "15px"
+    // titulo.setAttribute("dir","rtl")
+    // titulo.setAttribute("hidden","true")
 }
 function pruebaOnload2(){
-    const buscador = document.getElementById("typeChange");
-    buscador.inpu
+    const buscador = document.querySelector(".elTypeChange");
+    buscador.type = "password"
+    // buscador.setAttribute("minlength","4")
+    buscador.minLength = 5  //funciona con camelCase. setAttribute tiene preferencia.
+    buscador.placeholder = "cambio PH"
+    buscador.required = "true"
 }
-
+function pruebaOnload3(){
+    const enviarConsulta = document.getElementById("send1");
+    enviarConsulta.getAttribute("form", "formul")
+}
 window.onload = function(){
     pruebaOnload()
+    pruebaOnload2()
+    pruebaOnload3()
     // const pruebaInput = document.getElementById("#typeChange");
     // document.write(pruebaInput)
     // pruebaInput.setAttribute("hidden","true")
