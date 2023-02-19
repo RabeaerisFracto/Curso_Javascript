@@ -27,7 +27,7 @@ eleccionObjeto()
  //BUCLE Y LABEL
 forContador:
 for( i = 1; i <8; i++ ){
-    document.write( i + "<br>")
+    document.write( i + " ")
 }
 
 //OBJETOS, HERENCIA, GETTERS Y SETTERS
@@ -173,6 +173,10 @@ function pruebaOnload(){
     titulo.style.color = "#5bb"
     titulo.style.backgroundColor = "#d99"
     titulo.style.padding = "15px"
+    console.log(titulo.innerText)
+    console.log(titulo.innerHTML)
+    console.log(titulo.outerHTML)
+
     // titulo.setAttribute("dir","rtl")
     // titulo.setAttribute("hidden","true")
 }
@@ -197,6 +201,22 @@ window.onload = function(){
     // pruebaInput.setAttribute("hidden","true")
 };
 
+//OBTENCION Y MOD DE ELEMENTOS
+
+const Body = document.querySelector("#formul");
+const itemBody = document.createElement("P");
+let textItemBody = document.createTextNode("Texto de elemento creado en body x JS");
+itemBody.innerHTML = "modificacion con innerHTML"
+Body.appendChild(itemBody);
+itemBody.appendChild(textItemBody);
+
+let pruebaFragmento = document.createDocumentFragment();
+for (i = 0; i <= 5; i++) {
+    const listForFragment = document.createElement("LI")
+    listForFragment.innerHTML = `prueba en lista de fragmento ` + i
+    pruebaFragmento.appendChild(listForFragment)
+};
+itemBody.appendChild(pruebaFragmento);
 
 // CONSOLA
 console.time();
