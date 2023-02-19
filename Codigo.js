@@ -1,28 +1,39 @@
 //VARIABLES
 let objeto = prompt("que objeto usaras");
 let nombre = ["Aaron","Dominique","Jaiva"];
-let n = [0, 1, 2]
-function sujeto(){
-    if(objeto === "celular") return(n= 0);
-    else if(objeto === "animal") return(n= 1);
-    else(objeto !== "celular", "animal"); return(n= 2)
+let respuesta = [" Bueno, veremos celulares<br>"," Ufff no quiero, que pena<br>"," Lo siento, solo tenemos celulares<br>"]
+function nombreFiltrado(){
+    if(objeto === "celular") return(nombre[0]);
+    else if(objeto === "animal") return(nombre[1]);
+    else(objeto !== "celular", "animal"); return(nombre[2])
 }
-const frase = `Hola ${nombre[sujeto()]} esta es una prueba.`;
+function respuestaFiltrada(){
+    if(objeto === "celular") return(respuesta[0]);
+    else if(objeto === "animal") return(respuesta[1]);
+    else(objeto !== "celular", "animal"); return(respuesta[2])
+}
+// let n = [0, 1, 2]
+// function sujeto(){
+//     if(objeto === "celular") return(n= 0);
+//     else if(objeto === "animal") return(n= 1);
+//     else(objeto !== "celular", "animal"); return(n= 2)
+// }
+const frase = `Hola ${nombreFiltrado()} esta es una prueba.`+ respuestaFiltrada();
 document.write(frase)
 
 //FUNCION
-function eleccionObjeto(){
-    if(objeto == "celular") {
-        document.write(" Bueno, veremos celulares<br>")
-        }
-        else if(objeto == "animal") {
-            document.write(" Ufff no quiero, que pena<br>")
-        }
-        else {
-        document.write(" Lo siento, solo tenemos celulares<br>")
-    } 
-}
-eleccionObjeto()
+// function eleccionObjeto(){
+//     if(objeto == "celular") {
+//         document.write(" Bueno, veremos celulares<br>")
+//         }
+//         else if(objeto == "animal") {
+//             document.write(" Ufff no quiero, que pena<br>")
+//         }
+//         else {
+//         document.write(" Lo siento, solo tenemos celulares<br>")
+//     } 
+// }
+// eleccionObjeto()
  
  //BUCLE Y LABEL
 forContador:
@@ -48,19 +59,11 @@ class animal {
     }
     rugido() {
         if(this.ecoSistema == "tierra"||"aire" && this.organoRespiratorio == "o2" ) {
-            if(this._Patas == "de 4"){
-                document.write("Auuuuuu" + "<br>")
-            }
-                else if(this._Patas == "de 2" && this.recubrimiento == "cuero"){
-                    document.write("Noooooooo" + "<br>")
-                }
-                else{
-                    document.write("Groaaaaar" + "<br>")
-                }
+            if(this._Patas == "de 4") return(document.write("Auuuuuu" + "<br>"))
+                else if(this._Patas == "de 2" && this.recubrimiento == "cuero") return (document.write("Noooooooo" + "<br>"))
+                else{return(document.write("Groaaaaar" + "<br>"))}
         }
-        else{
-            document.write("Este animal no puede rugir" + "<br>")
-        }
+        else{document.write("Este animal no puede rugir" + "<br>")}
     }
     verInfo() {
         document.write(this.infoAnimal)
