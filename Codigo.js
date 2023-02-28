@@ -141,8 +141,8 @@ let mod4 = mod1.slice(2,6);
 
 document.write("<br>" + mod4);
 
-mod1.forEach(paraEach => {
-    return(document.write("<br>" + paraEach.slice(0,2) + paraEach.charAt(2).toUpperCase() + paraEach.slice(3)))
+mod1.forEach(x => {
+    return(document.write("<br>" + x.slice(0,2) + x.charAt(2).toUpperCase() + x.slice(3)))
 }); //slice para cortar frase hasta posicion de charAt, luego resto de frace con slice desde 1+ de charAt
 
 let marcas = ["PlayStation","Razer","Edifier","LG","HP","Sapphire","Ryzen","Asus"];
@@ -228,3 +228,15 @@ console.assert(5<2); //si FALSE sale error en consola, si TRUE no pasa nada.
 console.table(marcas);
 console.log();
 console.timeEnd();
+console.groupEnd();
+
+// WINDOW
+
+let YTpage = "http://youtube.com";
+let abrirYT = window.open(YTpage);
+abrirYT.close();
+abrirYT.closed; //verifica si esta o no cerrada la ventana
+abrirYT.stop();//cancela carga de ventana
+//window.alert("wena po");// este puede ir sin "window." antes
+//window.print();
+//window.prompt("escribe algo");//retorna cadena
