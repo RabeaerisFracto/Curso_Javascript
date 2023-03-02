@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Pagina Alicate</title>
+	<meta name="keywords" content="Prueba, Alicate, video, aprendizaje, html">
+	<meta name="description" content="Pagina que uso para aprender HTMLS antes de pasar a CSS y Javascript">
+	<meta name="author" content="RabeaerisFracto">
+	<meta name="copyright" content="RabeaerisFracto">
+	<meta name="robots" content="Formularios">
+	<link rel="icon" href="resources/icon.ico">
+	<script src="Codigo2.js"></script>
+	<link rel="stylesheet" type="text/css" href="cssformulario.css">
+	<!--<link rel="stylesheet" type="text/css" href="normalize.css">-->
+	<link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/2d02c042f3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<header class="gridheader">
+		<form class="buscador">
+			<label id="buscador__label" for="buscador__input">Busca</label>
+			<input id="buscador__input" type="text" name="Buscar Contenido" value="" placeholder="Buscar aquí" for=>
+			<input id="buscador__boton" type="submit" name="Boton de buscar" value="Buscar">	
+		</form>
+		<div class="inicio"><a id="header1" href="index.html">Volver a inicio</a></div></div>
+		<div class="formularia"><a id="header2" href="formulario.html" target="_blank">Formulario</a></div></div>
+		<div class="youtube"><a id="header3" href="https://www.youtube.com/channel/UCwaxMiyWnN0GTJ_sx96KyhQ" target="_blank">Youtube Profile</a></div>
+	</header>
+	<header class="bannermovil">
+		<form class="buscadormovil">
+			<input id="buscadormovil__input" type="text" name="Buscar Contenido" value="" placeholder="Buscar aquí" for=>
+			<input id="buscadormovil__boton" type="submit" name="Boton de buscar" value="Buscar">
+			<ul class="buttonsmovil"></ul>
+				<input type="checkbox" id="check">
+				<label for="check" id="iconmovil">
+					<i class="iconmovil fa-solid fa-bars-staggered"></i>
+				</label>
+			<div class="headermovil">
+				<li class="headermovil_boton"><a href="index.html">Volver a inicio</a></li>
+				<li class="headermovil_boton"><a href="formulario.html" target="_blank">Ir a formulario</a></li>
+				<li class="headermovil_boton"><a href="https://www.youtube.com/channel/UCwaxMiyWnN0GTJ_sx96KyhQ" target="_blank">Youtube Profile</a></li>
+			</div>
+			</ul>
+		</form>
+	</header>
+	<div class="gridcontent">
+		<article class="formulario">
+			<h2 class="formulario__titulo">Formularios</h2>
+			<form class="formulario__input">
+				<li><label for="nombre">Nombre</label><input type="text" name="Nombre" placeholder="Su nombre" id="nombre">
+				<li><label for="contraseña">Password</label><input type="Password" name="contraseña" placeholder="Su clave" id="contraseña">
+				<li><label for="edad">Edad</label><input type="number" name="edad" placeholder="su edad" id="edad">
+				<li><label for="email">Correo electronico</label><input type="email" name="email" placeholder="correo electronico" id="email">
+				<li><label for="color">Color Favorito</label><input type="color" name="color" placeholder="Su color favorito" id="color">
+				<li><label for="rango">Rango</label><input type="range" name="rango" placeholder="Rango" id="rango" min="1" max="5">
+				<li><label for="fecha">Disponibilidad</label><input type="date" name="fecha" placeholder="dd-mm-aaaa" id="fecha">
+				<li><label>Aceptas?</label><label>si</label><input type="radio" name="aceptas"><label>no</label><input type="radio" name="aceptas">
+				<li><label>Tienes esto?</label>&ensp;&ensp;&ensp;<label>telefono</label><input type="checkbox" name="tenencia">
+			</form>
+			<!--<table>
+				<tr>
+					<td>Nombre</td>
+					<td><form>
+							<input type="text" name="Nombre" required></td>
+				</tr>
+				<tr>
+					<td>Clave</td>
+					<td><form>
+							<input type="password" name="Clave" required>
+				</tr>
+				<tr>
+					<td>Edad</td>
+					<td><form>
+							<input type="number" name="Edad" min="18" max="65">
+				</tr>
+				<tr>
+					<td>Correo</td>
+					<td><form>
+							<input type="email" name="Correo Electronico">
+				</tr>		
+				<tr>
+					<td>Color</td>
+					<td><form>
+							<input type="color" name="Color">
+				</tr>		
+				<tr>
+					<td>Rango</td>
+					<td><form>
+							<input type="range" min="1" max="5">
+				</tr>		
+				<tr>
+					<td>Fecha</td>
+					<td><form>
+							<input type="date" name="Fecha">
+				</tr>		
+				<tr>
+					<td>Hora</td>
+					<td><form>
+							<input type="time" name="Hora">
+				</tr>		
+				<tr>
+					<td>Aceptas?</td>
+					<td><input type="button" value="Acepto"></td>
+				</tr>
+			</table><br><br><br>
+				<form>
+					<input type="submit" name="Enviar en idioma local"><br><br><br>-->
+		</article>
+	</div>
+	<aside class="gridaside">
+		<section>
+			<h3 id="a1988">Hola a todos</h3>
+			<h3>Lista X</h3>
+				<ul>
+					<li>primero esto</li>
+					<li>luego esto
+						<ul>
+							<li>en medio esto</li>
+							<li>y tb esto</li>
+						</ul>
+					</li>
+					<li>despues esto</li>
+					<li>a continuacion esta imagen de la web <br>
+						<img src="https://cdn.shopify.com/s/files/1/0604/5761/5547/products/14811955-25d2-4405-b91a-e8977f0bc9c7.jpg?v=1644426469" alt="Lady BB" title="Cazadora">
+					</li>
+					<li>finalmente esta imagen local<br>
+						<a href="#1988"><img src="resources/True-Story-300x245.png" width="160" alt="Meme guardado" title="True Story"></a>
+					</li>
+				</ul>
+		</section>
+		<section>
+			<ol>
+				<li>lista en</li>
+				<li>Orden numerico</li>
+				<li id="video__avispa">video insertado<br>
+					<video src="resources/VID_20190317_154321.mp4" controls title="Avispa Canibal"></video>
+					
+				</li>
+				<li>video web<br>
+					<iframe src="https://www.youtube.com/embed/t69I9yAKiVc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				</li>
+				<li>audio insertado<br>
+					<audio src="resources/Age of Empires II Definitive Edition_replay_2022.02.05-02.36.mp3" controls></audio>
+				</li>
+			</ol>
+		</section>
+	</aside>
+	<div id="mensaje">.<div id="contenedor__mensaje">Y este es otro mensaje consecutivo para ver que tan separado debe estar un 2do mensaje... Este es un mensaje de prueba, juega Destiny 2 antes de que termine la temporada!!</div></div>
+	<footer class="gridfooter">
+		<h5>Todos los derechos reservados</h5>
+			<p>Contactanos</p>
+			<ul>
+				<li>x Youtube</li>
+				<li>x la pagina</li>
+				<li id="1989">Por el <a href="carpeta2 main/carpeta 2/2da Pagina.html">formulario</a></li>
+			</ul>
+	</footer>
+</body>
+</html>

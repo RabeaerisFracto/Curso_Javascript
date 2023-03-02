@@ -1,0 +1,189 @@
+* {
+	/*color: orangered; */
+	font-family: sans-serif; line-height: 1.2; font-stretch: ultra-condensed; background-color: lightyellow;
+}
+
+nav {
+	display: flex; overflow: visible; justify-content: space-between;
+}
+.bannerdesktop {
+	background-image: url(resources/banner.png); position: fixed; width: 100%; 
+	border-bottom-left-radius: 50px; border-bottom-right-radius: 50px; z-index: 100; top: 0px;
+}
+#divisionbuscador {
+	display: inline-block; background-color: rgba(0, 0, 0, 0.0);
+}
+.header {
+	background-color: rgba(0, 0, 0, 0.0); overflow: visible; display: flex;
+}
+.headerinvisible {
+	padding: 1em 1em; background-color: rgba(0, 0, 0, 0); display: flex;
+}
+.header__button {
+	background-image: url(resources/button.png); display: inline-block; border: 2px double lightsalmon; border-radius: 7px;
+	padding: 15px; box-sizing: content-box; transition: font-size .5s; height: 20px; width: 150px; text-decoration: none;
+	font-style: italic; color: white; text-align: center; top: 50%;
+}
+.header__button:hover {
+	outline: 4px solid green; border-radius: 1em; font-size: 20px; box-sizing: content-box;
+}
+.buscadorsize {
+	background-color: rgba(0, 0, 0, 0); display: flex; margin: auto 0;
+}
+#buscador__boton {
+	display: inline; background-color: white;border-radius: 5px; box-shadow: 5px 5px 3px 0 black; margin-left: 5px;
+}
+#buscador__input {
+	background: linear-gradient(to left, transparent, lightpink); border-radius: 5px; display: flex; flex-shrink: 3; outline: none;
+	border: none; border-bottom: 2px solid green; width: 300px;
+}
+#buscador__label {
+	background-color: rgba(0, 0, 0, 0.0); padding: 5px;
+}
+.buscador {
+	background-color: rgba(0, 0, 0, 0.0); margin-left: 2em; display: flex; box-sizing: border-box;
+}
+#check {
+	display: none;
+}
+.bannermovil {
+	display: none;
+	position: fixed;
+	width: 100%;
+}
+.background__fixed {
+	padding: 30px;
+	background: #398;
+	width: 50%;
+	height: 200px;
+	margin: 40px;
+	background-image: url(resources/Perro\ Grillo.jpeg);
+	background-size: cover;
+	background-attachment: fixed;
+}
+/*----------- Hasta aca es NAV --------------*/
+/*----------- Parte Contenido y Aside -------*/
+.Articulo__titulo {
+	font-size: 3em; font-family: 'Stardos Stencil', cursive; font-weight: 900; border: 5px solid darkcyan;
+	border-radius: 3px; display: inline-block;
+}
+.cuerpo {
+	position: relative;
+	top: 100px;
+	display: grid;
+	grid-template-columns: 270px 200px 1fr;
+	grid-template-rows: 701px 1fr 200px;
+	grid-template-areas:
+		"Aside content content"
+		"Aside content content"
+		"Footer Footer Footer";
+	grid-gap: 20px;
+}
+aside {
+	grid-column: 1 / 2; grid-row: 1 / 3; border: 3px double green; border-radius: 10px;
+	background: radial-gradient(circle, transparent, #aaa); margin-left: 10px;
+}
+section, ul, li, ol, h3, h5, p {
+	background: transparent; 
+}
+video, iframe, audio, img {
+	max-width: 200px;
+	/*max-widht de img de cazadora al 100% en normilize*/
+}
+img {
+	width: 200px;
+}
+article {
+	grid-column: 2 / 4; grid-row: 1 / 3;
+}
+footer {
+	grid-column: 1 / 4; grid-row: 3 / 4; background: linear-gradient(to bottom, skyblue, turquoise); outline: 3px dashed darkblue;
+}
+/*------------- Menu Responsive ------------*/
+@media only screen and (max-width: 1150px){
+	.bannerdesktop {
+		display: none;
+	}
+	.bannermovil {
+		display: inline-block; position: fixed; z-index: 100;
+	}
+	.buscadormovil {
+		background-image: url(resources/banner.png); width: 100%;
+		margin: 0px 0; padding: 5px; display: inline-block;
+	}
+	#buscadormovil__input {
+		transition: 0.5s; display: inline-block; width: 200px;
+	}
+	#buscadormovil__input:focus {
+		transition: all 0.5s;
+		background: linear-gradient(to left, #fff, hotpink);
+		width: 68%;
+	}
+	.iconmovil {
+		float: right; margin: 0px 20px; font-size: 20px; background-color: rgba(0, 0, 0, 0); cursor: pointer;
+	}
+	.buttonsmovil {
+		display: block;
+		position: absolute;
+	}
+	.headermovil {
+		background-color: rgba(0, 0, 0, 0);
+		display: none;
+		transition: .5s;
+		position: relative;
+	}
+	.headermovil_boton {
+		display: block; background-color: rgba(0, 0, 0, 0); background-image: url(resources/wood.png); text-align: center;
+		padding: 20px; font: 30px italic white; position: static;
+	}
+	.headermovil_boton a {
+		text-decoration: none;
+	}
+	.headermovil_boton a:visited {
+		color: white;
+	}
+	.headermovil_boton a:link {
+		color: white;
+	}
+	#check:checked ~ .headermovil {
+		display: block;
+	}
+	.cuerpo {
+		top: 40px;
+	}
+	aside {
+		left: -258px;
+		position: relative;
+		background: #aaa;
+		transition: all 0.5s;
+	}
+	aside:active {
+		transform: translate(260px);
+	}
+	article {
+	grid-column: 1 / 4; grid-row: 1 / 3;
+	margin-left: 25px;
+	}
+	.Articulo__titulo {
+		font-size: 40px;
+	}
+	/*#iconmovil:hover ~ .headermovil {
+		display: block;
+		transition: .5s;
+	}*/
+}
+/*------------------ Formulario (Pagina Formulario) -----------------*/
+.formulario {
+	/*position: relative;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	height: fit-content;*/
+}
+.formulario__form {
+}
+.formulario__titulo {
+}
+.formulario__input {
+	display: none;
+}
