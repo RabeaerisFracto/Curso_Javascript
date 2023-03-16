@@ -1,17 +1,33 @@
-//VARIABLES
+//VARIABLES (ultimo activo x chatGPT)
 let objeto = prompt("que objeto usaras");
-let nombre = ["Aaron","Dominique","Jaiva"];
-let respuesta = [" Bueno, veremos celulares<br>"," Ufff no quiero, que pena<br>"," Lo siento, solo tenemos celulares<br>"]
-function nombreFiltrado(){
-    if(objeto === "celular") return(nombre[0]);
-    else if(objeto === "animal") return(nombre[1]);
-    else(objeto !== "celular", "animal"); return(nombre[2])
-}
-function respuestaFiltrada(){
-    if(objeto === "celular") return(respuesta[0]);
-    else if(objeto === "animal") return(respuesta[1]);
-    else(objeto !== "celular", "animal"); return(respuesta[2])
-}
+const objetos = {
+    "celular": "Aaron",
+    "animal": "Dominique"
+  };
+  function nombreFiltrado() {
+    return objetos[objeto] || "Jaiva";
+  }
+  const respuestas = {
+    "celular": "Bueno, veremos celulares<br>",
+    "animal": "Ufff no quiero, que pena<br>"
+  };
+  function respuestaFiltrada() {
+    return respuestas[objeto] || "Lo siento, solo tenemos celulares<br>";
+  }
+    
+// let objeto = prompt("que objeto usaras");
+// let nombre = ["Aaron","Dominique","Jaiva"];
+// let respuesta = [" Bueno, veremos celulares<br>"," Ufff no quiero, que pena<br>"," Lo siento, solo tenemos celulares<br>"]
+// function nombreFiltrado(){
+//     if(objeto === "celular") return(nombre[0]);
+//     else if(objeto === "animal") return(nombre[1]);
+//     else; return(nombre[2])
+// }
+// function respuestaFiltrada(){
+//     if(objeto === "celular") return(respuesta[0]);
+//     else if(objeto === "animal") return(respuesta[1]);
+//     else; return(respuesta[2])
+// }
 // let n = [0, 1, 2]
 // function sujeto(){
 //     if(objeto === "celular") return(n= 0);
@@ -240,3 +256,29 @@ abrirYT.stop();//cancela carga de ventana
 //window.alert("wena po");// este puede ir sin "window." antes
 //window.print();
 //window.prompt("escribe algo");//retorna cadena
+
+const screen = window.screen;
+console.log(screen);
+const screenLeft = window.screenLeft;
+const screenTop = window.screenTop;
+console.log(screenLeft,screenTop)
+
+const windowLocation = window.location.href + " " + window.location.hostname + " " + window.location.pathname + " " + window.location.protocol;
+//window.location.assign("https://youtube.com")
+
+document.write(windowLocation);
+
+// EVENTOS
+
+const botonJs = document.querySelector(".botonEvento");
+
+// botonJs.addEventListener("click",(e)=>{
+//     alert("prueba boton") //primero evento, despues funcion
+//     console.log(e)
+// });
+botonJs.addEventListener("click",removeList)
+function removeList (evt){
+    alert("prueba boton");
+    botonJs.removeEventListener("click",removeList);//remover listener no puede ser con funcion flecha
+    console.log(evt.target) //se debe ejecutar el evento antes de verlo en consola
+}
