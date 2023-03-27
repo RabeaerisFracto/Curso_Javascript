@@ -4,13 +4,13 @@ const objetos = {
     "celular": "Aaron",
     "animal": "Dominique"
   };
-  function nombreFiltrado() {
-    return objetos[objeto] || "Jaiva";
-  }
   const respuestas = {
     "celular": "Bueno, veremos celulares<br>",
     "animal": "Ufff no quiero, que pena<br>"
   };
+  function nombreFiltrado() {
+    return objetos[objeto] || "Jaiva";
+  }
   function respuestaFiltrada() {
     return respuestas[objeto] || "Lo siento, solo tenemos celulares<br>";
   }
@@ -271,14 +271,68 @@ document.write(windowLocation);
 // EVENTOS
 
 const botonJs = document.querySelector(".botonEvento");
+const botonYT = document.querySelector("#botonYoutube");
+let botonRSize = document.querySelector("#botonResize");
 
 // botonJs.addEventListener("click",(e)=>{
 //     alert("prueba boton") //primero evento, despues funcion
 //     console.log(e)
 // });
-botonJs.addEventListener("click",removeList)
+botonJs.addEventListener("click",removeList,true) //true, le da preferencia a ejecucion por sobre bubbling
 function removeList (evt){
     alert("prueba boton");
     botonJs.removeEventListener("click",removeList);//remover listener no puede ser con funcion flecha
     console.log(evt.target) //se debe ejecutar el evento antes de verlo en consola
+    evt.stopPropagation() //evita que otros event listener padres se activen.
 }
+function botonYoutube2 (){
+    if (window.confirm("esta por salir de la pagina, desea continuar?")){
+        return (window.open(YTpage))
+    }
+        else {alert("se ha mantenido en la pagina")
+        }
+}
+botonYT.addEventListener("dblclick",botonYoutube2)
+function abrirYoutube (){
+    if (window.confirm("esta por salir de la pagina, desea continuar?")){
+        return (window.open(YTpage))}
+        else {
+        }
+} //esto sirve en firefox como advertencia antes de salir del sitio.
+
+window.addEventListener("beforeunload", (event)=> {
+    event.preventDefault(); //previene mensaje default
+    event.returnValue = '¿Está seguro que desea salir de la página?';
+});// en firefox modificacion del mensaje esta descativado.
+
+function resizeScreen(){
+    if (screen.width > 800){
+        window.resizeTo(800,600)
+    }
+    else {
+        window.resizeTo(1240,480)
+    }
+}
+botonRSize.addEventListener("click",resizeScreen)
+addEventListener("resize",()=>{
+    alert("se ha cambiado el tamaño de la pantalla")
+}) //solo funciona en ventana abierta por script.......... -____-
+const elBuscador = document.querySelector(".elTypeChange");
+const contenedor = document.querySelector(".seleccion");
+elBuscador.addEventListener("select",(evt)=>{
+    console.log(evt);
+    let inicioSeleccion = evt.target.selectionStart;
+    let terminoSeleccion = evt.target.selectionEnd;
+    let totalEscrito = elBuscador.value;
+    contenedor.textContent = totalEscrito.substring(inicioSeleccion,terminoSeleccion);
+})// target y otras propiedades se puede acceder por consola, revisando console.log(evt)
+
+
+
+const intervalo = (setInterval(function inputValue(){
+    elBuscador.value = "hola";
+    },2000)// si lo borras se escribe nuevamente
+)
+setTimeout(()=>{
+    clearInterval(intervalo);
+},7000); //despues de 7 segs, ya se deja de escribir.
