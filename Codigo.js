@@ -1,6 +1,6 @@
 //VARIABLES (ultimo activo x chatGPT)
 let objeto = prompt("que objeto usaras");
-const objetos = {
+const nombres = {
     "celular": "Aaron",
     "animal": "Dominique"
   };
@@ -9,12 +9,23 @@ const objetos = {
     "animal": "Ufff no quiero, que pena<br>"
   };
   function nombreFiltrado() {
-    return objetos[objeto] || "Jaiva";
+    return nombres[objeto] || "Jaiva";
   }
   function respuestaFiltrada() {
     return respuestas[objeto] || "Lo siento, solo tenemos celulares<br>";
   }
-    
+//   function nombreFiltrado(objeto) {      usa mas recursos que if, y en frase nombreFiltrado(objeto)
+//     switch (objeto) {
+//       case "celular":
+//         return "Aaron";
+//         break;
+//       case "animal":
+//         return "Dominique";
+//         break;
+//       default:
+//         return "Jaiva";
+//     }
+//   }
 // let objeto = prompt("que objeto usaras");
 // let nombre = ["Aaron","Dominique","Jaiva"];
 // let respuesta = [" Bueno, veremos celulares<br>"," Ufff no quiero, que pena<br>"," Lo siento, solo tenemos celulares<br>"]
@@ -90,11 +101,11 @@ class Humano extends animal {
         super(patas,embrion,ambiente,respiracion,piel);
         this._lenguaje = comunicacion;
     } 
-    get getLenguaje(){
-        return this._lenguaje;
+    get getLenguaje(){                      //get getNombre
+        return this._lenguaje;             //retorna this.valor
     }    
-    set setLenguaje(comunicacion){
-        this._lenguaje = comunicacion;
+    set setLenguaje(comunicacion){         //set setNombre(contructor/nombre valor, como argumento)
+        this._lenguaje = comunicacion;     //this.valor = nombre constructor    --------> A LINEA 126
     }
     hablar() {
         document.write(`Soy humano y hablo ${this._lenguaje}` + "<br>")
@@ -108,13 +119,30 @@ let anaconda = new animal("sin","oviparo","tierra","o2","escamas");
 let pinguino = new animal("de 2","oviparo","agua","o2","plumas");
 let hombre = new Humano("de 2","viviparo","tierra","o2","cuero","frances")
 
-halcon.setPatas = "de 4"
+halcon.setPatas = "de 4"                   
 halcon.rugido();
 tiburon.rugido();
 pinguino.verInfo();
-hombre.setLenguaje = "cualquier otra wea";
+hombre.setLenguaje = "cualquier otra wea";   //objeto.setNombre = "nuevo nombre de valor"
 hombre.hablar();
 hombre.verInfo();
+
+// TRY,TROW, CATCH, Y FINALLY
+try{
+    halcon.fijarOpcion(); //se debe ejecutar la funcion.
+}
+catch(error){
+    console.log("funcion no valida"); //aunsencia de cadena da mensaje default pero no es mensaje tipo error.
+    // throw {                            //throw, por alguna razon, evita que se exprese mas codigo una vez desencadenado. ATENTO A ESTO
+    //     nombreError: "errorQl",
+    //     tipoError: "errorMula",
+    //     opciones: "ni1"
+    // }
+}
+finally{
+    console.log("Finally, aparece de igual manera este o no presente el error. Puede cerrar bases de datos.")
+}
+
 
 //METODOS DE CADENAS
 
@@ -268,11 +296,14 @@ const windowLocation = window.location.href + " " + window.location.hostname + "
 
 document.write(windowLocation);
 
+
 // EVENTOS
 
 const botonJs = document.querySelector(".botonEvento");
 const botonYT = document.querySelector("#botonYoutube");
 let botonRSize = document.querySelector("#botonResize");
+let selectPrueba = document.querySelector("#selectPrueba");
+let textoFijo = document.querySelector("#opcionSeleccionada");
 
 // botonJs.addEventListener("click",(e)=>{
 //     alert("prueba boton") //primero evento, despues funcion
@@ -313,7 +344,7 @@ function resizeScreen(){
         window.resizeTo(1240,480)
     }
 }
-botonRSize.addEventListener("click",resizeScreen)
+botonRsize.addEventListener("click",resizeScreen)
 addEventListener("resize",()=>{
     alert("se ha cambiado el tamaño de la pantalla")
 }) //solo funciona en ventana abierta por script.......... -____-
@@ -327,7 +358,19 @@ elBuscador.addEventListener("select",(evt)=>{
     contenedor.textContent = totalEscrito.substring(inicioSeleccion,terminoSeleccion);
 })// target y otras propiedades se puede acceder por consola, revisando console.log(evt)
 
-
+function fijarOpcion(){
+    let valorSeleccionado = selectPrueba.value;
+    let textoSeleccionado = selectPrueba.options[selectPrueba.selectedIndex].text;
+    selectPrueba.value = valorSeleccionado
+    selectPrueba.text = textoSeleccionado
+    selectPrueba.style.display = `none`
+    textoFijo.innerText = textoSeleccionado
+}
+botonRsize.addEventListener("click",fijarOpcion);
+//Hay un span vacio, que se puede modificar con innerText. Desaparece selectPrueba
+//con style.display (opcion entre comillas). Necesario ingresar ID o clases como objetos.
+//atento a selectedIndex en textoSeleccionado, y rematar con .text
+//debe estar SIEMPRE value Y text.
 
 const intervalo = (setInterval(function inputValue(){
     elBuscador.value = "hola";
@@ -336,3 +379,99 @@ const intervalo = (setInterval(function inputValue(){
 setTimeout(()=>{
     clearInterval(intervalo);
 },7000); //despues de 7 segs, ya se deja de escribir.
+
+
+// CALLBACK
+
+//Funcion donde uno de sus parametros es otra funcion. Recordar utilizarla dentro de la misma funcion donde se esta ejecutando el CB.
+function pruebaCallback(anotacion,cb){
+    setTimeout(()=>{
+        console.log(anotacion);
+        cb(); //se necesita funcion dentro de setTimeout para demorarla.
+    },2000)
+}
+function pruebaCallback2(){
+    console.log("mensaje 2");
+}
+pruebaCallback("hola",pruebaCallback2);
+
+
+//   PROMESAS
+let variablePromesa = (id)=>{                                  //Se crea variable con funcion flecha, argumento opcional.
+    return new Promise ((resolve,reject)=>{                    //Se retorna promesa
+        let largoMarcas = marcas[id].length <= 5;              //nueva variable con operacion
+        if (largoMarcas === true){                             //condcional, cuya respuesta es resolve o reject
+            resolve(`Promesa Resuelta`);                       //En() mensaje, variable, u objeto
+        } else {
+            reject(`Promesa Rota`);
+}})}
+// for (i= 0;i<marcas.length;i++){          //probar forEach?
+//     variablePromesa(i).then((respPromesa)=>{                      //1era Variable.then((argumentoX)=>{Accion a tomar con argumentoX})
+//         console.log(`esto seria una  `+ respPromesa)
+//     }).catch((respPromesa)=>{                                  //}.catch((argumentoX)=>{Accion a tomar con argumentoX})
+//         console.log(`esto es una `+ respPromesa)
+//     })};
+
+
+
+
+
+//    ASYNC AWAIT
+
+async function promAsync(){                                       //async siempre antes de LA funcion
+    try{                                                          //try para poder poner un catch que agarre el reject
+        for (i= 0;i<marcas.length;i++){                           //for para cambiar la variable i automaticamente, pero al ser await se detiene en la 1era.
+            const respPromesa = await variablePromesa(i)          //var argumentoX = await variable de promesa()
+                console.log(`esto seria una  `+ respPromesa)
+}}catch(err){
+    console.log(`esto es una `+ err)
+}}
+
+promAsync();
+
+
+let nuevaPromesa = ()=>{
+    return new Promise ((resolve,reject)=>{               //Importa el orden de resolve y reject
+        let parImpar = Math.round(Math.random()*200)
+        if(parImpar % 2 == 0){
+            resolve("numero Par" + parImpar)
+        }else {
+            reject("numero Impar" + parImpar)
+        }})
+}
+
+// nuevaPromesa().then((x)=>{
+//     console.log("instruccion 1 de promesa 2 antes del return resolve")
+//     return new Promise ((resolve)=>{
+//         resolve ("el numero entregado es un " + x)
+//     })}).then((resultadoPromesa) => {
+//         return new Promise((resolve)=>{
+//             resolve(resultadoPromesa + " y 12345")
+//     })}).then((resultadoPromesa2)=>{
+//         console.log(resultadoPromesa2)
+//     }).catch((err)=>{
+//     console.log("instruccion 1 de promesa 2 antes del return reject")
+//     return console.log("el numero entregado es un " + err)
+// })
+//para usar un segundo .then() es necesario retornar una nueva promesa en cada then() y cerrar hasta
+//el ultimo () del 1er then(), que seria el que esta junto a la var.
+//el ultimo siempre va a ser el catch((err)) del reject, que debe venir con un retorno.
+
+
+
+const varAsync = async ()=>{
+    try{
+        let resultadoPromesa = await nuevaPromesa()
+        console.log("instruccion 1 de promesa 2 antes del return resolve")
+        let resultadoPromesa2 = await new Promise((resolve)=>
+        resolve("el numero entregado es un " + resultadoPromesa2))
+        let resultadoPromesa3 =await new Promise((resolve)=>{
+        resolve(console.log(resultadoPromesa3 + " y 12345"))
+        })}catch(err){
+            console.log(`esto es una `+ err)
+    }}
+
+varAsync();
+
+
+
