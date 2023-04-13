@@ -434,11 +434,11 @@ let nuevaPromesa = ()=>{
     return new Promise ((resolve,reject)=>{               //Importa el orden de resolve y reject
         let parImpar = Math.round(Math.random()*200)
         if(parImpar % 2 == 0){
-            resolve("numero Par" + parImpar)
+            let sentenciaPar = parImpar
+            resolve(sentenciaPar)
         }else {
-            reject("numero Impar" + parImpar)
-        }})
-}
+            reject("numero Impar " + parImpar)
+        }})}
 
 // nuevaPromesa().then((x)=>{
 //     console.log("instruccion 1 de promesa 2 antes del return resolve")
@@ -462,16 +462,51 @@ let nuevaPromesa = ()=>{
 const varAsync = async ()=>{
     try{
         let resultadoPromesa = await nuevaPromesa()
-        console.log("instruccion 1 de promesa 2 antes del return resolve")
-        let resultadoPromesa2 = await new Promise((resolve)=>
-        resolve("el numero entregado es un " + resultadoPromesa2))
-        let resultadoPromesa3 =await new Promise((resolve)=>{
-        resolve(console.log(resultadoPromesa3 + " y 12345"))
-        })}catch(err){
+        let resultadoPromesa2 = await resultadoPromesa
+        console.log(resultadoPromesa2)
+    }catch(err){
             console.log(`esto es una `+ err)
     }}
-
+// disminuí los .then y console.log para verificar lo corto del proceso y el retorno como resolve.
+varAsync();
+varAsync();
 varAsync();
 
+// con for() se pueden repetir los varAsync(), y se pueden dar en orden con await.
 
 
+//   FETCH, API, BLOB Y JSON 
+
+fetch(`https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/birds_antarctica.json`)
+    .then(res=>{
+        if(res.ok) {                                          //Lineas para comprobar si se cargo json correctamente
+            console.log("carga de aves realizada")            //cualquier mensaje antes del return
+            return res.json()}                                //necesario return para transformar json de esta manera, si solo es una linea no es necesario.
+        else {console.log("carga de archivo incompleta")}})   //mensaje para confirmar carga fallida
+    .then(data=> console.log(data.birds[1].members))          
+    .catch("ave no encontrada")
+
+//en [], se busca palabra separada x punto. En {}, se busca posicion entre [].
+const pngPika = document.getElementById("imgpika");    //creacion con anterioridad de <img> vacia, para posterior modificacion.
+
+fetch(`https://pokeapi.co/api/v2/pokemon/25/`)
+.then(pokeX=>{
+    if(pokeX.ok) { 
+        console.log("pokemon cargado") 
+        return pokeX.json()}  
+    else {console.log("pokemon no salio de terminal")}}) 
+.then(pika=>{                     //Aparte del console.log, puedo modificar o crear un <img> en document para modificarlo.
+    console.log(pika)
+    pngPika.src = pika.sprites.front_shiny   //seleccion de la propiedad del array
+    pngPika.style.height = `5%`              //modificacion con style
+    pngPika.style.width = `5%`})
+.catch("error")
+
+const Golem = document.createElement(`img`)     //Creacion de elemento mediante JS
+Golem.style.float = "left"
+Golem.style.width = "100px"   
+fetch(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/76.png`)
+.then(pokeX => pokeX.blob())                   //En ves de .json(), .blob()
+.then(imgCla=> Golem.src = URL.createObjectURL(imgCla))  //URL.createObjectURL se usa para evitar confusiones. Nueva const.src = ~(Att)
+.then(document.body.appendChild(Golem))  //asignar en nuevo hijo con appendChild(Const)
+.catch(error=> console.log(error))
