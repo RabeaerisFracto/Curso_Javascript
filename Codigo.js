@@ -1,13 +1,18 @@
+"use strict";
+
 //VARIABLES (ultimo activo x chatGPT)
 let objeto = prompt("que objeto usaras");
 const nombres = {
     "celular": "Aaron",
     "animal": "Dominique"
   };
+  Object.preventExtensions(nombres); // no permite añadir propiedades nuevas
   const respuestas = {
     "celular": "Bueno, veremos celulares<br>",
     "animal": "Ufff no quiero, que pena<br>"
   };
+  Object.defineProperty(respuestas, `animal`,{value:"Uffffff, naaaaaa", writeable:false})
+  //definePropertie: (nombre de variable, `propiedad`,{value:"valor", writeable:solo lectura boolean})
   function nombreFiltrado() {
     return nombres[objeto] || "Jaiva";
   }
@@ -63,7 +68,7 @@ document.write(frase)
 // eleccionObjeto()
  
  //BUCLE Y LABEL
-forContador:
+let i;
 for( i = 1; i <8; i++ ){
     document.write( i + " ")
 }
@@ -126,6 +131,8 @@ pinguino.verInfo();
 hombre.setLenguaje = "cualquier otra wea";   //objeto.setNombre = "nuevo nombre de valor"
 hombre.hablar();
 hombre.verInfo();
+console.log(animal);
+
 
 // TRY,TROW, CATCH, Y FINALLY
 try{
@@ -155,25 +162,25 @@ let ras1 = "Th";
 let ras2 = ".";
 
 
-ena1 = cad1.concat(cad2,cad3,cad4);
-ena2 = ena1.startsWith(ras1);
-ena3 = ena1.endsWith(ras2)
-ena4 = ena1.includes(ras1)
-ena5 = ena1.indexOf("in")
-ena6 = ena1.lastIndexOf("in")
+let ena1 = cad1.concat(cad2,cad3,cad4);
+let ena2 = ena1.startsWith(ras1);
+let ena3 = ena1.endsWith(ras2)
+let ena4 = ena1.includes(ras1)
+let ena5 = ena1.indexOf("in")
+let ena6 = ena1.lastIndexOf("in")
 
 document.write("<br>"+ena1+"<br>"+ena2+"<br>"+ena3+"<br>"+ena4+"<br>"+ena5+" "+ena6+"<br>");
 
-rell1 = ras1.padStart(5,ras2) + " " + ras1.padEnd(5,ras2) + " " + ras1.repeat(5);
+let rell1 = ras1.padStart(5,ras2) + " " + ras1.padEnd(5,ras2) + " " + ras1.repeat(5);
 
 document.write("<br>"+rell1+"<br>");
 
-mod1 = ena1.split(".");
+let mod1 = ena1.split(".");
 document.write(mod1[2] + "<br>" + "<br>" + "<br>");
 
 //METODOS DE ARRAYS
 
-mod2 = mod1.pop(),mod1.shift(),mod1.reverse(),mod1.push(". That's it."),mod1.unshift("Number1","number2","number3","number4"),mod1.splice(1,3,"LetterA","LetterB","letterC");
+let mod2 = mod1.pop();mod1.shift(),mod1.reverse(),mod1.push(". That's it."),mod1.unshift("Number1","number2","number3","number4"),mod1.splice(1,3,"LetterA","LetterB","letterC");
 
 document.write(mod1);
 
@@ -189,13 +196,28 @@ mod1.forEach(x => {
     return(document.write("<br>" + x.slice(0,2) + x.charAt(2).toUpperCase() + x.slice(3)))
 }); //slice para cortar frase hasta posicion de charAt, luego resto de frace con slice desde 1+ de charAt
 
-let marcas = ["PlayStation","Razer","Edifier","LG","HP","Sapphire","Ryzen","Asus"];
+let marcas = ["PlayStation","Razer","Ryzen","Edifier","LG","HP","Sapphire","Ryzen","Asus","Ryzen"];
 // function cincoLet(desk){
 //     return (desk.length > 4);
 // }
-marcas = marcas.filter(x => x.length > 4);
 
-document.write(marcas);
+let marcasFiltradas = marcas.filter(x => x.length > 4);
+
+let marcasRepetidas = {};         //variable vacia para trabajar, debe ser entre {} no entre []
+
+for(let marca of marcas){        //pasar a traves de cada variable en el array
+    if(marcasRepetidas[marca]){  //TRICKY PART: si en marcasRepetidas NO esta la marca, se le da un valor de 1 (else),
+    marcasRepetidas[marca]++;    //pero si YA ESTA, la marca x la ke ya esta pasando el bucle, aumenta en 1(++)
+    } else {
+    marcasRepetidas[marca] = 1;
+    }
+}
+
+console.log(marcasRepetidas);
+
+document.write(marcasFiltradas);
+
+
 
 let vals = [5,4,9,2,1];
 
@@ -483,7 +505,7 @@ fetch(`https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/bir
             console.log("carga de aves realizada")            //cualquier mensaje antes del return
             return res.json()}                                //necesario return para transformar json de esta manera, si solo es una linea no es necesario.
         else {console.log("carga de archivo incompleta")}})   //mensaje para confirmar carga fallida
-    .then(data=> console.log(data.birds[1].members))          
+    .then(data=> console.table(data.birds[1].members))          
     .catch("ave no encontrada")
 
 //en [], se busca palabra separada x punto. En {}, se busca posicion entre [].
@@ -510,3 +532,116 @@ fetch(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/
 .then(imgCla=> Golem.src = URL.createObjectURL(imgCla))  //URL.createObjectURL se usa para evitar confusiones. Nueva const.src = ~(Att)
 .then(document.body.appendChild(Golem))  //asignar en nuevo hijo con appendChild(Const)
 .catch(error=> console.log(error))
+
+let fecha = new Date
+document.write(fecha.getFullYear()); //tb esta:get~(Date,Day,Month,Year,Hour,etc)
+//getFullYear es getYear+1970.
+
+// GET Y POST (GPT)
+
+const form = document.querySelector('#myForm');  //selector de formulario
+
+addEventListener('submit', (e) => {         //el event es el boton submit, aplicar al form(selector de formulario)
+  e.preventDefault(); // previene el comportamiento predeterminado del formulario.
+  //Al llamar a preventDefault(), se detiene la acción predeterminada del formulario, lo que significa que los
+  //datos del formulario no se enviarán de inmediato y se puede usar JavaScript para procesar los datos del
+  //formulario de una manera personalizada.
+
+  const formData = new FormData(form); // crea un objeto FormData con los valores del formulario
+                                       //nueva K es igual a objeto nuevo FormData(K de selector)
+  fetch('https://example.com/api/submit', {   //Aqui va la pagina a la ke se envia la info. esta en "action" en form html
+    method: 'POST',                     //metodo post, si es get, no se pone nada xke esta x default
+    body: formData,                     //aki se agrega la info mas delicada, que se quiere enviar al servidor
+    // headers: {"Content-Type" : "aplication/json"}   //Con form data no es necesario esto, como tp stringyfy() el body
+  })
+  .then(response => {
+    if (response.ok) {
+      alert('Formulario enviado con éxito');
+      form.reset();                    // resetea el formulario
+    } else {
+      alert('Ocurrió un error al enviar el formulario');
+    }
+  })
+  .catch(error => {
+    alert('Ocurrió un error al enviar el formulario');
+    console.error(error);
+  });
+});
+// Cuando se envía una petición con FormData, los datos se envían en el formato "multipart/form-data",
+//que es un formato estándar para el envío de archivos y datos binarios en una solicitud HTTP
+//no es necesario agregar un encabezado (header) adicional, ya que el navegador establece automáticamente
+//un encabezado 'Content-Type' para la solicitud fetch() cuando se usa FormData(). El valor de Content-Type
+//es "multipart/form-data", que es el tipo de contenido predeterminado para enviar datos de formulario con
+//un método POST.
+
+//      OPERADOR TERNARIO Y SPREAD
+
+let pruebaTernario = Math.round(Math.random()*10);
+(pruebaTernario % 2 === 0) ? console.log("el numero es par") : console.log("el numero es impar"); //(condicion) ? accion si true : accion si false;
+let marcas2 = ["DC","Steam","Mozilla","Microsoft","Sony"];
+console.log(marcas); //Aparece como array
+console.log(...marcas2, ...marcas); //Aparece como string, y tambien sirve para concatenar arrays sin modificar array original.
+
+function sumatoria1 (...numeros) {
+    let resultadoSumatoria1 = 0
+    for(let i=0;i<numeros.length;i++) {
+        resultadoSumatoria1 += numeros[i]
+    }
+    return resultadoSumatoria1;
+}
+console.log(sumatoria1(1,3,5));// la sumatoria puede tener un array, y para descomponer los argumentos, se puede usar (...array).
+//En este caso, en vez de tener sumatoria1(array[0],array[1],array[3]), solo se usa sumatoria1(...array).
+
+//         DRAG & DROP
+
+const cuadroPlomo = document.querySelector(".zonaDropeo");
+const cuadroRojo = document.querySelector(".objetoDropeo");
+cuadroRojo.addEventListener("dragstart",(e)=> {
+    console.log(1)
+    cuadroRojo.classList.add("seleccionado")
+    const contenidoCuadroRojo = cuadroRojo.textContent;
+    e.dataTransfer.setData("text/plain",contenidoCuadroRojo);
+});
+cuadroRojo.addEventListener("drag",()=> {console.log(2)});
+cuadroRojo.addEventListener("dragend",()=> {
+    console.log(3)
+    cuadroRojo.classList.remove("seleccionado")
+});
+cuadroPlomo.addEventListener("dragover",(e)=>{
+    e.preventDefault();
+    cuadroPlomo.classList.add("seleccionado")
+})
+cuadroPlomo.addEventListener("dragleave",(e)=>{
+    e.preventDefault();
+    cuadroPlomo.classList.remove("seleccionado")
+})
+cuadroPlomo.addEventListener("drop",(e)=>{
+    console.log(4);
+    const contenidoCuadroPlomo = e.dataTransfer.getData("text/plain");
+    cuadroPlomo.textContent = contenidoCuadroPlomo;
+})
+
+//     const infoCuadroRojo = cuadroRojo.textContent;
+//     e.dataTransfer.setData("text/plain",infoCuadroRojo)});
+// cuadroRojo.addEventListener("drag",()=>console.log("drag"));
+// cuadroPlomo.addEventListener("drop", (e)=> {
+//     const infoTransferida = e.dataTransfer.getData("text/plain");
+//     cuadroPlomo.textContent = infoTransferida;
+// });
+
+//         API GEOLOCALIZACION
+const options = { //Options se debe declarar antes de llamar getCurrentPosition
+    enableHighAccuracy: true,  //Maxima Presicion
+    maximumAge: 0, //cuanto debe esperar para solicitar actualizar la info
+    timeout: 5000 //cuanto tiempo de tardanza para retornar valores, en milisegundos
+}
+
+navigator.geolocation.getCurrentPosition((pos)=>{   //cada funcion flecha es un parametro, mas options
+    const posicionActual = pos;
+    console.log(`tu posicion actual es latitud ${posicionActual.coords.latitude} y longitud ${posicionActual.coords.longitude}`);
+    console.log(posicionActual)},
+    (error)=>{
+        console.log(error.message + ":   no se pudo obtener la ubicacion")},
+    options
+); //aparte de getCurrentPosition(), tb tenemos watchPosition(), que usa los mismos parametros,
+// se actualiza cada vez que detecta movimiento

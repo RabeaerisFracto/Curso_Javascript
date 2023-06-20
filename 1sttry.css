@@ -172,13 +172,13 @@ footer {
 		transition: .5s;
 	}*/
 }
-/*------------------ Formulario (Pagina Formulario) -----------------*/
+/*------------------ Formulario (Pagina Formulario) -----------------
 .formulario {
 	/*position: relative;
 	display: flex;
 	justify-content: center;
 	width: 100%;
-	height: fit-content;*/
+	height: fit-content;
 }
 .formulario__form {
 }
@@ -186,4 +186,30 @@ footer {
 }
 .formulario__input {
 	display: none;
+}*/
+
+/*------------------ Objetos extras -----------------*/
+
+.zonaDropeo {
+	display: block;
+	background: #aaa;
+	width: 50vw;
+	height: 50px;
+	border-radius: 7px;
+	border-style: dashed;
+}
+.objetoDropeo {
+	display: inline-block;
+	background: #d41919;
+	width: 50vw;
+	height: 30px;
+	border-radius: 7px;
+	border-style: dashed;
+	cursor: move;
+}
+.objetoDropeo.seleccionado {
+	opacity: .5;
+}
+.zonaDropeo.seleccionado {
+	opacity: .8;
 }
