@@ -645,3 +645,37 @@ navigator.geolocation.getCurrentPosition((pos)=>{   //cada funcion flecha es un 
     options
 ); //aparte de getCurrentPosition(), tb tenemos watchPosition(), que usa los mismos parametros,
 // se actualiza cada vez que detecta movimiento
+
+
+//       FILE READER
+let lector = document.getElementById(`lector`); //selecciono input "vacio" type="file"
+let observador = document.getElementById(`observador`);
+let previewImagen = document.getElementById(`previewImg`);
+let previewTexto = document.getElementById(`previewFile`);
+
+lector.addEventListener("change",()=>{  //listener "change"
+    leerTxt(lector.files[0]);   //f(x) que va definida abajo
+})
+observador.addEventListener("change",()=>{  //listener "change"
+    leerImg(observador.files[0]);
+})
+const leerTxt = (txt) => {           // f(x) usada en listener change
+    const reader = new FileReader(); //nuevo fileReader en forma de K
+    reader.readAsText(txt);          //en reader puede ser tb: .readAsDataURL
+    reader.onload = (e)=>{
+        const contenidoPreviewText = e.target.result;
+        previewTexto.value = contenidoPreviewText
+        previewTexto.style.display = "inline-block"
+    }
+}
+
+
+const leerImg = (img) => {           // f(x) usada en listener change
+    const reader2 = new FileReader(); //nuevo fileReader en forma de K
+    reader2.readAsDataURL(img);          //en reader puede ser tb: .readAsDataURL
+    reader2.onload = (e)=>{
+        const contenidoPreviewImg = e.target.result;
+        previewImg.setAttribute(`src`,contenidoPreviewImg)
+        previewImg.style.display = "inline-block"
+    }
+}

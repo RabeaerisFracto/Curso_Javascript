@@ -213,3 +213,15 @@ footer {
 .zonaDropeo.seleccionado {
 	opacity: .8;
 }
+#previewFile {
+	display: none;
+}
+#previewImg {
+	display: none;
+	width: 15%;
+	height: 15%;
+	border: 2px solid #398;
+}
+.fral .frai {
+	display: inline-block;
+}
