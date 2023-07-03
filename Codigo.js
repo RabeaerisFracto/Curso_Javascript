@@ -596,6 +596,13 @@ console.log(sumatoria1(1,3,5));// la sumatoria puede tener un array, y para desc
 
 const cuadroPlomo = document.querySelector(".zonaDropeo");
 const cuadroRojo = document.querySelector(".objetoDropeo");
+const cargaExterna = ae => {
+    const reader3 = new FileReader();
+    reader3.readAsText(ae);
+    reader3.addEventListener("load", e=>{
+        cuadroPlomo.textContent = e.currentTarget.result
+    })
+}
 cuadroRojo.addEventListener("dragstart",(e)=> {
     console.log(1)
     cuadroRojo.classList.add("seleccionado")
@@ -619,6 +626,8 @@ cuadroPlomo.addEventListener("drop",(e)=>{
     console.log(4);
     const contenidoCuadroPlomo = e.dataTransfer.getData("text/plain");
     cuadroPlomo.textContent = contenidoCuadroPlomo;
+    e.preventDefault();
+    cargaExterna(e.dataTransfer.files[0])
 })
 
 //     const infoCuadroRojo = cuadroRojo.textContent;
@@ -649,33 +658,46 @@ navigator.geolocation.getCurrentPosition((pos)=>{   //cada funcion flecha es un 
 
 //       FILE READER
 let lector = document.getElementById(`lector`); //selecciono input "vacio" type="file"
-let observador = document.getElementById(`observador`);
-let previewImagen = document.getElementById(`previewImg`);
+let fral = document.querySelector(`.fral`);
+let observador = document.getElementById(`observador`); // lector y observador son los inputs
+let previewImagen = document.getElementById(`previewImg`); // los demas son el lienzo
 let previewTexto = document.getElementById(`previewFile`);
 
+
+
 lector.addEventListener("change",()=>{  //listener "change"
-    leerTxt(lector.files[0]);   //f(x) que va definida abajo
+    let archivo = lector.files[0]
+    if(archivo.type.startsWith(`image/`)){
+        leerImg(archivo)}
+    else if(archivo.type === `text/plain`){
+        leerTxt(lector.files[0])};   //f(x) que va definida abajo
 })
-observador.addEventListener("change",()=>{  //listener "change"
-    leerImg(observador.files[0]);
-})
+// observador.addEventListener("change",()=>{  //listener "change"
+//     leerImg(observador.files[0]);
+// })
 const leerTxt = (txt) => {           // f(x) usada en listener change
     const reader = new FileReader(); //nuevo fileReader en forma de K
+    const previewTexto = document.createElement(`textarea`);
+    previewTexto.setAttribute(`id`,`previewFile`);
+    fral.appendChild(previewTexto);
     reader.readAsText(txt);          //en reader puede ser tb: .readAsDataURL
-    reader.onload = (e)=>{
+    reader.onload = (e)=>{           //para hacerlo una vez cargue lo examinado.
         const contenidoPreviewText = e.target.result;
-        previewTexto.value = contenidoPreviewText
-        previewTexto.style.display = "inline-block"
-    }
+        previewTexto.value = contenidoPreviewText   //Valor del cuadro de texto
+        previewTexto.style.display = "inline-block" // en css default como display none
+    }                                               //Aparece solo al seleccionar archivo
 }
 
 
 const leerImg = (img) => {           // f(x) usada en listener change
     const reader2 = new FileReader(); //nuevo fileReader en forma de K
+    const previewImagen = document.createElement(`img`);
+    previewImagen.setAttribute(`id`,`previewImg`);
+    fral.appendChild(previewImagen);
     reader2.readAsDataURL(img);          //en reader puede ser tb: .readAsDataURL
     reader2.onload = (e)=>{
         const contenidoPreviewImg = e.target.result;
-        previewImg.setAttribute(`src`,contenidoPreviewImg)
-        previewImg.style.display = "inline-block"
+        previewImagen.setAttribute(`src`,contenidoPreviewImg)  // .value x .setAttribute(`src`, nombreKDeResult)
+        previewImagen.style.display = "inline-block"
     }
 }
