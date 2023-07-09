@@ -596,7 +596,7 @@ console.log(sumatoria1(1,3,5));// la sumatoria puede tener un array, y para desc
 
 const cuadroPlomo = document.querySelector(".zonaDropeo");
 const cuadroRojo = document.querySelector(".objetoDropeo");
-const cargaExterna = ae => {
+const cargaExterna = ae => {   //intento de fileReader con Drag&Drop, se explica mas abajo
     const reader3 = new FileReader();
     reader3.readAsText(ae);
     reader3.addEventListener("load", e=>{
@@ -619,7 +619,7 @@ cuadroPlomo.addEventListener("dragover",(e)=>{
     cuadroPlomo.classList.add("seleccionado")
 })
 cuadroPlomo.addEventListener("dragleave",(e)=>{
-    e.preventDefault();
+    e.preventDefault();                         // se usa preventDefault() para evitar salida forzosa de zona
     cuadroPlomo.classList.remove("seleccionado")
 })
 cuadroPlomo.addEventListener("drop",(e)=>{
@@ -691,13 +691,66 @@ const leerTxt = (txt) => {           // f(x) usada en listener change
 
 const leerImg = (img) => {           // f(x) usada en listener change
     const reader2 = new FileReader(); //nuevo fileReader en forma de K
-    const previewImagen = document.createElement(`img`);
-    previewImagen.setAttribute(`id`,`previewImg`);
-    fral.appendChild(previewImagen);
+    const previewImagen = document.createElement(`img`);  //se crea elemento donde se mostrará preview
+    previewImagen.setAttribute(`id`,`previewImg`);        // se le da id
+    fral.appendChild(previewImagen);                      //Nuevo elemento se adjunta a grupo mas grande
     reader2.readAsDataURL(img);          //en reader puede ser tb: .readAsDataURL
     reader2.onload = (e)=>{
         const contenidoPreviewImg = e.target.result;
         previewImagen.setAttribute(`src`,contenidoPreviewImg)  // .value x .setAttribute(`src`, nombreKDeResult)
         previewImagen.style.display = "inline-block"
     }
+}
+
+//                IndexedDB
+
+const peticionDB = indexedDB.open("DBPrueba",1); //esta K no es la DB, es la peticion para crear una.("nombre",version)
+peticionDB.addEventListener("upgradeneeded",()=>{ //la peticion puede generar evt success, error, o upgradneeded
+    const laDB = peticionDB.result; //K ahora si representa a la base de datos, x ser resultado de peticion.
+    laDB.createObjectStore("nombreChukos",{ //creamos OS("nombredeOS",{opciones})
+        autoIncrement: true  //sirve para que index aumente cada vez ke le vayamos agregando data
+    })
+})
+const añadirData = (data,key) =>{
+    const laDB = peticionDB.result;  //se vuelve a especificar nombre de DB
+    const transaccion = laDB.transaction("nombreChukos","readwrite"); //transaccion toma DB.transaction("nombre OS",
+    //"puede ser readonly, readwrite, o versionchange")
+    const almacen = transaccion.objectStore("nombreChukos"); //el OS sera la transaccion.objectStore("nombre de OS",claveOpcional)
+    almacen.put(data,key); //el parametro sera el agregado en añadirData. PUT tb sirve en caso de actualizar data
+    transaccion.addEventListener("complete",()=>{
+        console.log(`Añadido correctamente a ${almacen.name}` )
+    })
+    laDB.close();
+}
+const getIDBData = modo =>{ // Como esta parte se repite simepre, podemos hacer una funcion para acortarla.
+    const laDB = peticionDB.result;
+    const transaccion = laDB.transaction("nombreChukos",modo); 
+    const almacen = transaccion.objectStore("nombreChukos");
+    return [almacen,transaccion,laDB]; //recordar orden de corchetes
+}
+const leerData = ()=>{
+    const IDBData = getIDBData("readonly");
+    IDBData[0];
+    IDBData[1];
+    // const laDB = peticionDB.result;
+    // const transaccion = laDB.transaction ("nombreChukos","readonly");
+    // const almacen = transaccion.objectStore("nombreChukos");
+    const cursor = IDBData[0].openCursor(); //diferencia radica aqui
+    cursor.addEventListener("success",()=>{  //eventListener u onsuccess
+        if(cursor.result){                   //cursor por si solo es una peticion, debe trabajarse con .result
+            console.log(cursor.result.value);//y lo que se debe mostrar es el valor de este result
+            cursor.result.continue();        // sin esto solo se muestra el primero
+        } else console.log("todos los datos leidos");// eventualmente se queda sin datos, x lo ke si o si va a llegar al else.
+    })
+    IDBData[2].close(); // se cierra DB para ahorrar recursos.
+}
+const eliminarData = (key) =>{
+    const IDBData = getIDBData("readonly");
+    // const laDB = peticionDB.result;  
+    // const transaccion = laDB.transaction("nombreChukos","readwrite");
+    // const almacen = transaccion.objectStore("nombreChukos");
+    IDBData[0].delete(key); //Posicion 0 de array = almacen
+    IDBData[1].addEventListener("complete",()=>{ //posicion 1 de array = transaccion.
+        console.log(`Eliminado correctamente de ${IDBData[0].name}`) //Cuidado con mantener objeto en `${}`
+    })
 }
