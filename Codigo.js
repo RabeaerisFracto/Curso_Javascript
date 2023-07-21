@@ -12,7 +12,7 @@ const nombres = {
     "animal": "Ufff no quiero, que pena<br>"
   };
   Object.defineProperty(respuestas, `animal`,{value:"Uffffff, naaaaaa", writeable:false})
-  //definePropertie: (nombre de variable, `propiedad`,{value:"valor", writeable:solo lectura boolean})
+  //defineProperty: (nombre de variable, `propiedad`,{value:"valor", writeable:solo lectura boolean})
   function nombreFiltrado() {
     return nombres[objeto] || "Jaiva";
   }
@@ -139,7 +139,7 @@ try{
     halcon.fijarOpcion(); //se debe ejecutar la funcion.
 }
 catch(error){
-    console.log("funcion no valida"); //aunsencia de cadena da mensaje default pero no es mensaje tipo error.
+    console.log("funcion no valida"); //ausencia de cadena da mensaje default pero no es mensaje tipo error.
     // throw {                            //throw, por alguna razon, evita que se exprese mas codigo una vez desencadenado. ATENTO A ESTO
     //     nombreError: "errorQl",
     //     tipoError: "errorMula",
@@ -194,7 +194,7 @@ document.write("<br>" + mod4);
 
 mod1.forEach(x => {
     return(document.write("<br>" + x.slice(0,2) + x.charAt(2).toUpperCase() + x.slice(3)))
-}); //slice para cortar frase hasta posicion de charAt, luego resto de frace con slice desde 1+ de charAt
+}); //slice para cortar frase hasta posicion de charAt, luego resto de frase con slice desde 1+ de charAt
 
 let marcas = ["PlayStation","Razer","Ryzen","Edifier","LG","HP","Sapphire","Ryzen","Asus","Ryzen"];
 // function cincoLet(desk){
@@ -526,11 +526,12 @@ fetch(`https://pokeapi.co/api/v2/pokemon/25/`)
 
 const Golem = document.createElement(`img`)     //Creacion de elemento mediante JS
 Golem.style.float = "left"
-Golem.style.width = "100px"   
+Golem.style.width = "100px"
+Golem.style.border = "2px dashed black"
 fetch(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/76.png`)
 .then(pokeX => pokeX.blob())                   //En ves de .json(), .blob()
 .then(imgCla=> Golem.src = URL.createObjectURL(imgCla))  //URL.createObjectURL se usa para evitar confusiones. Nueva const.src = ~(Att)
-.then(document.body.appendChild(Golem))  //asignar en nuevo hijo con appendChild(Const)
+.then(()=>document.body.appendChild(Golem))  //asignar en nuevo hijo con appendChild(Const)
 .catch(error=> console.log(error))
 
 let fecha = new Date
@@ -541,32 +542,32 @@ document.write(fecha.getFullYear()); //tb esta:get~(Date,Day,Month,Year,Hour,etc
 
 const form = document.querySelector('#myForm');  //selector de formulario
 
-addEventListener('submit', (e) => {         //el event es el boton submit, aplicar al form(selector de formulario)
-  e.preventDefault(); // previene el comportamiento predeterminado del formulario.
-  //Al llamar a preventDefault(), se detiene la acción predeterminada del formulario, lo que significa que los
-  //datos del formulario no se enviarán de inmediato y se puede usar JavaScript para procesar los datos del
-  //formulario de una manera personalizada.
+// form.addEventListener('submit', (e) => {         //el event es el boton submit, aplicar al form(selector de formulario)
+//   e.preventDefault(); // previene el comportamiento predeterminado del formulario.
+//   //Al llamar a preventDefault(), se detiene la acción predeterminada del formulario, lo que significa que los
+//   //datos del formulario no se enviarán de inmediato y se puede usar JavaScript para procesar los datos del
+//   //formulario de una manera personalizada.
 
-  const formData = new FormData(form); // crea un objeto FormData con los valores del formulario
-                                       //nueva K es igual a objeto nuevo FormData(K de selector)
-  fetch('https://example.com/api/submit', {   //Aqui va la pagina a la ke se envia la info. esta en "action" en form html
-    method: 'POST',                     //metodo post, si es get, no se pone nada xke esta x default
-    body: formData,                     //aki se agrega la info mas delicada, que se quiere enviar al servidor
-    // headers: {"Content-Type" : "aplication/json"}   //Con form data no es necesario esto, como tp stringyfy() el body
-  })
-  .then(response => {
-    if (response.ok) {
-      alert('Formulario enviado con éxito');
-      form.reset();                    // resetea el formulario
-    } else {
-      alert('Ocurrió un error al enviar el formulario');
-    }
-  })
-  .catch(error => {
-    alert('Ocurrió un error al enviar el formulario');
-    console.error(error);
-  });
-});
+//   const formData = new FormData(form); // crea un objeto FormData con los valores del formulario
+//                                        //nueva K es igual a objeto nuevo FormData(K de selector)
+//   fetch('https://example.com/api/submit', {   //Aqui va la pagina a la ke se envia la info. esta en "action" en form html
+//     method: 'POST',                     //metodo post, si es get, no se pone nada xke esta x default
+//     body: formData,                     //aki se agrega la info mas delicada, que se quiere enviar al servidor
+//     // headers: {"Content-Type" : "aplication/json"}   //Con form data no es necesario esto, como tp stringyfy() el body
+//   })
+//   .then(response => {
+//     if (response.ok) {
+//       alert('Formulario enviado con éxito');
+//       form.reset();                    // resetea el formulario
+//     } else {
+//       alert('Ocurrió un error al enviar el formulario');
+//     }
+//   })
+//   .catch(error => {
+//     alert('Ocurrió un error al enviar el formulario');
+//     console.error(error);
+//   });
+// });
 // Cuando se envía una petición con FormData, los datos se envían en el formato "multipart/form-data",
 //que es un formato estándar para el envío de archivos y datos binarios en una solicitud HTTP
 //no es necesario agregar un encabezado (header) adicional, ya que el navegador establece automáticamente
@@ -704,24 +705,40 @@ const leerImg = (img) => {           // f(x) usada en listener change
 
 //                IndexedDB
 
-const peticionDB = indexedDB.open("DBPrueba",1); //esta K no es la DB, es la peticion para crear una.("nombre",version)
+const peticionDB = indexedDB.open("DBPrueba2",1); //esta K no es la DB, es la peticion para crear una.("nombre",version)
 peticionDB.addEventListener("upgradeneeded",()=>{ //la peticion puede generar evt success, error, o upgradneeded
     const laDB = peticionDB.result; //K ahora si representa a la base de datos, x ser resultado de peticion.
     laDB.createObjectStore("nombreChukos",{ //creamos OS("nombredeOS",{opciones})
         autoIncrement: true  //sirve para que index aumente cada vez ke le vayamos agregando data
     })
 })
-const añadirData = (data,key) =>{
+const añadirData = (data) =>{
     const laDB = peticionDB.result;  //se vuelve a especificar nombre de DB
     const transaccion = laDB.transaction("nombreChukos","readwrite"); //transaccion toma DB.transaction("nombre OS",
     //"puede ser readonly, readwrite, o versionchange")
     const almacen = transaccion.objectStore("nombreChukos"); //el OS sera la transaccion.objectStore("nombre de OS",claveOpcional)
-    almacen.put(data,key); //el parametro sera el agregado en añadirData. PUT tb sirve en caso de actualizar data
+    almacen.add(data); //el parametro sera el agregado en añadirData. PUT tb sirve en caso de actualizar data
     transaccion.addEventListener("complete",()=>{
         console.log(`Añadido correctamente a ${almacen.name}` )
     })
-    laDB.close();
 }
+const formularioAnterior = document.getElementById("formul2");
+formularioAnterior.addEventListener("submit",evt =>{
+        evt.preventDefault();
+        const valorChuko = document.getElementById("typeChange2").value;
+        if (valorChuko.trim() !== ''){
+            añadirData({nombre:valorChuko})};
+    })
+const botonChuko = document.getElementById(`botonChuko`);
+botonChuko.addEventListener(`click`,()=>{
+try{    // este try es para capturar error que se da al cancelar el prompt.
+    let nombreAIngresar = prompt(`ingresa el nombre del chuko`);
+    if (nombreAIngresar.trim() !== ``){
+        añadirData({ nombre: nombreAIngresar });
+        alert(`agregado correctamente`)
+    }}catch{
+    alert(`no se han ingresado datos`);
+}})
 const getIDBData = modo =>{ // Como esta parte se repite simepre, podemos hacer una funcion para acortarla.
     const laDB = peticionDB.result;
     const transaccion = laDB.transaction("nombreChukos",modo); 
@@ -754,3 +771,66 @@ const eliminarData = (key) =>{
         console.log(`Eliminado correctamente de ${IDBData[0].name}`) //Cuidado con mantener objeto en `${}`
     })
 }
+
+//       MATCHMEDIA()
+
+const comprobarOrientacion = window.matchMedia('(orientation: portrait)');
+function mensajeOrientacion(evt) {
+    if(evt.matches){
+        alert(`ya no estas en landscape`)
+    }else{alert(`volviste a landscape`)}
+}
+comprobarOrientacion.addListener(mensajeOrientacion);
+//creas una K con matchMedia(), no es necesario "window.". Requisito en parametro es (`()`)
+//para desencadenar simepre el efecto, debe ser un un addListener, sino solo sera una vez.
+
+//             INTERSECTION OBSERVER
+const newMsgBirds = (titulo,contenido) =>{     //en parametros designamos datos de json
+    const contenedorListaAves = document.createElement("DIV"); //contenedor de cada post (padre)
+    const familiaAves = document.createElement("H3");  //titulo post (hijo)
+    const listaAves = document.createElement("p");     //cuerpo post (hijo)
+
+    contenedorListaAves.classList.add("contenedorListaAves");  //se añaden clases
+    familiaAves.classList.add("familiaAves");  
+    listaAves.classList.add("listaAves");
+
+    contenedorListaAves.appendChild(familiaAves);//se designan hijos a padre
+    contenedorListaAves.appendChild(listaAves);
+    contenedorAves = document.getElementById("contenedorAves");  //seleccion de div gran HTML contenedor de posts
+    contenedorAves.appendChild(contenedorListaAves); //se asigna como padre de padre
+
+    familiaAves.textContent = titulo;  //contenido del titulo en parametro
+    listaAves.textContent = contenido; // lo mismo en contenido
+    
+    // return contenedorAves.appendChild(contenedorListaAves); //Se retorna padre de padre
+}
+
+fetch(`https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/birds_antarctica.json`)
+    .then(res=>{    //tipico llamado de JSON o API
+        if(res.ok) {                                          
+            console.log("carga de aves realizada para cuadro azul")          
+            return res.json()}                               
+        else {console.log("carga de archivo incompleta")}})  
+    .then(data=>{
+        data.birds.forEach(bird=>{
+            newMsgBirds(bird.family,bird.members);
+        })
+    let contenedorListaAves = document.querySelectorAll(".contenedorListaAves");
+    contenedorListaAves.forEach(elemento=>{
+        const interObservador = new IntersectionObserver(entradas=>{
+            entradas.forEach(entrada=>{
+                // (entrada.isIntersecting) ? entrada.classList.add("mostrar") : entrada.classList.remove("mostrar");
+                // if(entrada.isIntersecting){
+                //     entrada.classList.add("mostrar");
+                // }else{
+                //     entrada.classList.remove("mostrar");
+                // }
+                entrada.target.classList.toggle("mostrar",entrada.isIntersecting);
+                })
+        },{threshold: 0.1,})
+        interObservador.observe(elemento);
+    });
+});
+
+
+
