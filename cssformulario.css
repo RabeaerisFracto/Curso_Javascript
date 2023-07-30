@@ -252,3 +252,29 @@ border-radius: 7px;
 		display: none;
 	}
 }
+
+
+
+.contenedorListaAves {
+	display: inline-block;
+	width: 450px;
+	border: 3px double #398;
+	border-radius: 10px;
+	transform: translateX(500px);
+	opacity: 0;
+	transition: 400ms;
+}
+.contenedorListaAves.mostrar {
+	transform: translateX(0px);
+	opacity: 1;
+}
+#contenedorAves {
+	display: block;
+	border: 7px solid blue;
+	width: 700px;
+	height: 300px;
+	padding: 20px;
+	overflow: hidden;
+	overflow-y: auto;
+	box-sizing: content-box;
+}
