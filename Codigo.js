@@ -785,62 +785,49 @@ comprobarOrientacion.addListener(mensajeOrientacion);
 //para desencadenar simepre el efecto, debe ser un un addListener, sino solo sera una vez.
 
 //             INTERSECTION OBSERVER
+const urls = [`https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/birds_antarctica.json`,`https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/birds_north_america.json`]
+const contenedorAves = document.getElementById("contenedorAves");  //seleccion de div gran HTML contenedor de posts
+
 const newMsgBirds = (dataAves) =>{ 
-    for(let i = 0;i < 1;i++){    //YA SE QUE ESTA WEA ESTA DE MAS
-        const ave = dataAves
-        const contenedorListaAves = document.createElement("DIV"); //contenedor de cada post (padre)
-        const familiaAves = document.createElement("H3");  //titulo post (hijo)
-        const listaAves = document.createElement("p");     //cuerpo post (hijo)
+    const contenedorListaAves = document.createElement("DIV"); //contenedor de cada post (padre)
+    const familiaAves = document.createElement("H3");  //titulo post (hijo)
+    const listaAves = document.createElement("p");     //cuerpo post (hijo)
 
-        contenedorListaAves.classList.add("contenedorListaAves");  //se añaden clases
-        familiaAves.classList.add("familiaAves");  
-        listaAves.classList.add("listaAves");
+    contenedorListaAves.classList.add("contenedorListaAves");  //se añaden clases
+    familiaAves.classList.add("familiaAves");  
+    listaAves.classList.add("listaAves");
+    contenedorListaAves.appendChild(familiaAves);//se designan hijos a padre
+    contenedorListaAves.appendChild(listaAves);
+    const contenedorAves = document.getElementById("contenedorAves");  //seleccion de div gran HTML contenedor de posts
+    contenedorAves.appendChild(contenedorListaAves); //se asigna como padre de padre
 
-        contenedorListaAves.appendChild(familiaAves);//se designan hijos a padre
-        contenedorListaAves.appendChild(listaAves);
-        const contenedorAves = document.getElementById("contenedorAves");  //seleccion de div gran HTML contenedor de posts
-        contenedorAves.appendChild(contenedorListaAves); //se asigna como padre de padre
-
-        familiaAves.textContent = ave.family;  //contenido del titulo en parametro
-        listaAves.textContent = ave.members; // lo mismo en contenido
-    }
-        // return contenedorAves.appendChild(contenedorListaAves); //Se retorna padre de padre
+    familiaAves.textContent = dataAves.family;  //contenido del titulo en parametro
+    listaAves.textContent = dataAves.members; // lo mismo en contenido
+    
+    return contenedorListaAves
 }
-const urlsParaFetch = [
-    `https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/birds_antarctica.json`,
-    `https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/birds_north_america.json`
-]
-let fetchJsons = url=>{
-    fetch(url)
-        .then(res=>{    //tipico llamado de JSON o API
-            if(res.ok) {                                          
-                console.log("carga de aves realizada para cuadro azul")          
-                return res.json()}                               
-            else {console.log("carga de archivo incompleta")}})  
-        .then(data=>{
-            data.birds.forEach(bird=>{//birds xke 3er elemento de json se llama asi.
-                newMsgBirds(bird);//parametro dataAves de newMsgBirds
-            })
-        let contenedorListaAves = document.querySelectorAll(".contenedorListaAves");//selector de cada contenedor
-        contenedorListaAves.forEach(elemento=>{//para aplicar IO a cada cLA
-            const interObservador = new IntersectionObserver(entradas=>{
-                entradas.forEach(entrada=>{
-                    entrada.target.classList.toggle("mostrar",entrada.isIntersecting);
-                    })
-            },{threshold: 0.1,})//que se vea un 10%
-            interObservador.observe(elemento);
-        });
-    })};
-const cargarJson = async ()=>{//para cargar 2 json al mismo tiempo
-    try{
-        const promesaJson = urlsParaFetch.map(url=>fetchJsons(url))//como forEach
-        const respPromesaJson = await Promise.all(promesaJson)//promise.all=carga todo el map antes de mostrarlo.
-        console.log(respPromesaJson + "cargado")
-    }catch{
-        console.log("no se cargaron los json")
-    }
+let contador = 0;
+const cargarPublicaciones = async (num) => {
+        const request = await fetch(`https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/birds_north_america.json`);
+        const content = await request.json();
+        let dataAves = content.birds;
+        const documentFragment = document.createDocumentFragment();
+        for (let j = 0; j < num; j++) {
+            const newPublicacion = newMsgBirds(dataAves[contador])
+            documentFragment.appendChild(newPublicacion);
+            contador++;
+            const contenedorListaAves = newPublicacion;
+            interObservador.observe(contenedorListaAves)}
+        contenedorAves.appendChild(documentFragment)
 }
-cargarJson();
+const interObservador = new IntersectionObserver(entradas => {
+    entradas.forEach(entrada => {entrada.target.classList.toggle("mostrar", entrada.isIntersecting)
+    if (entrada.isIntersecting && entrada.target === contenedorAves.lastElementChild) {
+        cargarPublicaciones(4);
+        }})})
+cargarPublicaciones (5)
+
+
 
 const containerNewBoxes = document.getElementById("containerNewBoxes");//contenedor vacio
 let totalCajas = 0;//contador de cajas
@@ -868,4 +855,5 @@ const simpleObserver = new IntersectionObserver((entradas)=>{
         })
 },{rootMargin:"-100px 0px -130px"})//fuerza margin distinto a div
 createNewBoxes()
+
 
