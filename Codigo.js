@@ -787,7 +787,7 @@ comprobarOrientacion.addListener(mensajeOrientacion);
 //             INTERSECTION OBSERVER
 const urls = [`https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/birds_antarctica.json`,`https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/birds_north_america.json`]
 const contenedorAves = document.getElementById("contenedorAves");  //seleccion de div gran HTML contenedor de posts
-
+let contador = 0;
 const newMsgBirds = (dataAves) =>{ 
     const contenedorListaAves = document.createElement("DIV"); //contenedor de cada post (padre)
     const familiaAves = document.createElement("H3");  //titulo post (hijo)
@@ -806,26 +806,24 @@ const newMsgBirds = (dataAves) =>{
     
     return contenedorListaAves
 }
-let contador = 0;
 const cargarPublicaciones = async (num) => {
         const request = await fetch(`https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/birds_north_america.json`);
         const content = await request.json();
-        let dataAves = content.birds;
-        const documentFragment = document.createDocumentFragment();
-        for (let j = 0; j < num; j++) {
-            const newPublicacion = newMsgBirds(dataAves[contador])
-            documentFragment.appendChild(newPublicacion);
-            contador++;
-            const contenedorListaAves = newPublicacion;
+        let dataAves = content.birds;//acceso a array en json
+        const documentFragment = document.createDocumentFragment();//docfragment para ahorrar recursos
+        for (let j = 0; j < num; j++) {//j x i en for en caso de uso de otro for con i
+            const contenedorListaAves = newMsgBirds(dataAves[contador])//otra k mismo nombre, [] variando desde afuera de funcion, sino, se resetea cada vez que se usa
+            documentFragment.appendChild(contenedorListaAves);//cada cLA queda en un fragment.
+            contador++;//se va sumando a let de afuera, asi mantiene numero independiente de cuanto se use la funcion actual.
             interObservador.observe(contenedorListaAves)}
         contenedorAves.appendChild(documentFragment)
 }
 const interObservador = new IntersectionObserver(entradas => {
     entradas.forEach(entrada => {entrada.target.classList.toggle("mostrar", entrada.isIntersecting)
     if (entrada.isIntersecting && entrada.target === contenedorAves.lastElementChild) {
-        cargarPublicaciones(4);
-        }})})
-cargarPublicaciones (5)
+        cargarPublicaciones(1);//cargas de mas de 1 toma error y no carga ultimo elemento de json
+        }})})//con catch se dispara un contador++ extra con un cLA vacio.
+cargarPublicaciones (5);//se puede mantener recarga de publicaciones a 1, con uso de un rootMargin positivo.
 
 
 
