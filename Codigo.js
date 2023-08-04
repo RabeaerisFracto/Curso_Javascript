@@ -788,7 +788,8 @@ comprobarOrientacion.addListener(mensajeOrientacion);
 const urls = [`https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/birds_antarctica.json`,`https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/birds_north_america.json`]
 const contenedorAves = document.getElementById("contenedorAves");  //seleccion de div gran HTML contenedor de posts
 let contador = 0;
-const newMsgBirds = (dataAves) =>{ 
+const newMsgBirds = (dataAves) =>{
+    if(!dataAves){return null}; //para catch promesa rota
     const contenedorListaAves = document.createElement("DIV"); //contenedor de cada post (padre)
     const familiaAves = document.createElement("H3");  //titulo post (hijo)
     const listaAves = document.createElement("p");     //cuerpo post (hijo)
@@ -807,12 +808,13 @@ const newMsgBirds = (dataAves) =>{
     return contenedorListaAves
 }
 const cargarPublicaciones = async (num) => {
-        const request = await fetch(`https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/birds_north_america.json`);
+        const request = await fetch(urls[0]);
         const content = await request.json();
         let dataAves = content.birds;//acceso a array en json
         const documentFragment = document.createDocumentFragment();//docfragment para ahorrar recursos
         for (let j = 0; j < num; j++) {//j x i en for en caso de uso de otro for con i
             const contenedorListaAves = newMsgBirds(dataAves[contador])//otra k mismo nombre, [] variando desde afuera de funcion, sino, se resetea cada vez que se usa
+            if(!contenedorListaAves){return null};//para catch elemento inexistente
             documentFragment.appendChild(contenedorListaAves);//cada cLA queda en un fragment.
             contador++;//se va sumando a let de afuera, asi mantiene numero independiente de cuanto se use la funcion actual.
             interObservador.observe(contenedorListaAves)}
