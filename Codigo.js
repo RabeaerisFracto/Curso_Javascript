@@ -857,3 +857,142 @@ const simpleObserver = new IntersectionObserver((entradas)=>{
 createNewBoxes()
 
 
+//             VISIBILITYCHANGE Y NOTIFICATIONS
+
+addEventListener("visibilitychange",e=>{
+    if(e.target.visibilityState == "visible") { //otra opcion es hidden
+        alert("puede usarse para pausar videos cuando se cambia de pestaña")
+    }
+})
+
+Notification.requestPermission(()=>{// dara default, granted o denied
+    if(Notification.permission == "granted"){
+        new Notification("notificacion aca")
+    }
+}); 
+//
+
+//               WEB WORKERS & MEMOIZER
+
+let worker = new Worker(`elworker.js`);//crear worker seleccionando .js ya creado.
+let divWorker = document.getElementById(`resultadoOperacion`);
+let botonWorker = document.getElementById(`botonWorker`);
+botonWorker.addEventListener("click",(event)=>{//event puede ser usado para evitar propagacion
+    //o tambien para preventDefault()
+    worker.postMessage(`mensaje o argumento hacia el worker`);//util para trasásar un argumento al worker
+    worker.onmessage = function(message){//recepcion de info desde worker
+        divWorker.textContent = message.data;//se retorna message, datos usualmente almacenados en .data
+        worker.terminate();//sin esto operacion se sigue ejecutando. Posible para encontrar valor
+    }
+})
+
+let formul3 = document.getElementById(`formul3`);
+let inputWorker = document.getElementById(`inputWorker`);
+let sendToWorker = document.getElementById(`sendToWorker`);
+formul3.addEventListener("submit",(event)=>{//listener de formulario, no de hijos
+    event.preventDefault()//para no actualizar pagina
+    let inputWorkerValue = parseFloat(inputWorker.value);//transformar dato cadena en numero
+    worker.postMessage(inputWorkerValue);//enviar dato
+    worker.onmessage = function(message){//recibir respuesta
+        console.log(message.data);
+    }
+})
+//...codigo del worker........
+// function fibonacci (n){//funcion X (dificil)
+//     if (n <= 1) {
+//         return n;
+//     }
+//     return fibonacci(n - 1) + fibonacci(n - 2);
+//     }
+// let cache = new Map(); //map() afuera de memoizer
+
+// function memoizer(fn){//argumento sera funcion a guardar en cache
+//     return function(...argumento){//funcion anonima da libertad a aplicar cualquier funcion.
+//         //Rest da libertad alto numero de argumentos de funcion escogida
+//         const key = JSON.stringify(argumento);
+
+//         if(cache.has(key)){//argumento de cache es la k. Xke argumento es numero, y key es string.
+//             console.log("numero encontrado")
+//             return cache.get(key);//retorna value de key solicitada
+//         }
+//         const resultado = fn(argumento);//Si no se encuentra, se procede normalmente.
+//         cache.set(key,resultado);//Se almacena clave y valor
+//         console.log(cache)
+//         return resultado;
+//     }
+// }
+
+// onmessage = function(message){//recepcion de data
+//     let mensaje = message.data//data.data
+//     if(typeof mensaje == `number`){//typeof para especificar cadena o numero.
+//         //NO SIN COMILLAS, aunque lo sugiera el editor...
+//         const fiboMemo = memoizer(fibonacci)
+//         const resultado = fiboMemo(mensaje);//funcion "global" dentro del worker
+//         //"." innecesario antes de funcion.
+//         self.postMessage(resultado)// envio de resultado
+//     }else{//otra opcion, mismo worker, otra funcion.
+//         let sum = 0;
+//         for(let i =0;i<1000000000;i++){
+//             sum+=i
+//         }//esto para calculo dificil, pagina sigue funcional mientras worker calcula.
+//         self.postMessage(sum)
+//         //mientras else funcione, typeof se pega. Para instantaneo, otro worker dedicado.
+// }}
+
+//                 CACHE
+
+caches.open("nombre de cache")//Si no esta, lo crea.
+    .then(cache=>{
+        return cache.add("testFileReader3.TXT")//argumento es request, URL que se quiere almacenar
+        //equivalente a fetch() para cargar, y put() para guardarlo.
+        .then(()=>cache.addAll(["testFileReader2.txt","testFileReader.txt"]))
+        .then(()=>cache.match("testFileReader2.txt"))//match trabaja con promesas
+        .then(res=>{//recordar que TODO va dentro de () del then actual. Y NO PONER ; DESPUES DEL CIERRE DEL () ANTERIOR.
+            if(res){//condicional que permita resolver promesa
+                return res.text().then(text=>{
+                    let contenidoModificado = text.replace("2","7")//("texto que se desea remplazar","que dirá en su lugar")
+                    return contenidoModificado
+                });//retorno como text() solo si contenido es tipo text
+            }else{throw new Error("archivo no encontrado en cache")}//no olvidar condicion para promesa rota.
+        })
+        .then(contenidoTexto=>{
+            console.log(contenidoTexto)
+        }).catch(error=>{//no olvidar catch
+            console.log(error)
+        })})
+        .then(()=>{
+            caches.open("nombre de cache")
+            .then((cache)=>{
+            return cache.matchAll("testFileReader3.TXT")//match para todos los del mismo nombre
+            .then(responses=>{
+                const contenidosTextos=[]//array vacio que permite almacenar mensajes de varios txt
+                for (const response of responses) {
+                    contenidosTextos.push(response.text())};//agrega strings al array vacio
+                return Promise.all(contenidosTextos)//retorna el array, una vez todas las promesas se resuelven.
+            .then(res2=>{
+                return console.log(res2[0])})//retorna array, asique si se quiere el contenido, se selecciona con []
+            }).catch(error=>{
+                return console.log(error)
+        })})})
+            .then(()=>{
+                caches.open("nombre de cache")
+                .then((cache)=>{
+                return cache.keys().then(res=>{
+            return console.log(res)
+        })})})
+        .then(()=>{
+            caches.open("nombre de cache")
+            .then((cache)=>{
+            return cache.delete("testFileReader.txt")
+        })})
+            //despues del return, debes sacar un nuevo .then, que use .open para abrir cache. Solo asi podras usar
+            //delete, match o cualquier otro.
+            //CLARAMENTE OPTIMIZABLE, pasando a service workers para optimizar codigo ahí.
+
+
+//         SERVICE WORKERS
+
+if(navigator.serviceWorker){
+    navigator.serviceWorker.register("serviceWorker.js")
+}
+
