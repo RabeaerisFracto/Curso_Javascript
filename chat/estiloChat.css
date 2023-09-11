@@ -1,0 +1,68 @@
+*{
+    background: #399
+}
+
+#fondoCel {
+    border: 3px double #585;
+    width: 300px;
+    height: 800px;
+    margin: 0 auto;
+    border-radius: 15px;
+    background-image: url(resources/IMG_1476_edited.jpg);
+    background-size: cover;
+    background-color: transparent;
+    padding: 15px;
+}
+#inputTexto {
+    width: 240px;
+    margin: 0 auto;
+}
+#formChat {
+    margin: 0 auto;
+}
+.mensajeChatEnviado {
+    border: 2px solid #558;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 8px;
+    padding: 5px 9px;
+    margin: 6px;
+    background: linear-gradient(to left, transparent, #558);
+    border: none;
+    text-shadow: #FC0 1px 0 10px;
+    font: 1.5em Georgia,serif;
+    color: wheat;
+
+}
+.mensajeChatEnviado:last-child{
+    position: relative;
+    transform: translateX(170px);
+    transition: 401ms;
+}
+.mensajeChatRecibido {
+    border: 2px solid rgb(26, 165, 56);
+    width: fit-content;
+    height: fit-content;
+    border-radius: 8px;
+    padding: 5px 9px;
+    margin: 6px;
+    margin-right: 0;
+    margin-left: auto;
+    display: block;
+    background: linear-gradient(to left, transparent, #585);
+    border: none;
+    text-shadow: #FC0 1px 0 10px;
+    font: 1.5em Georgia,serif;
+    color: wheat;
+
+
+}
+.label{
+    font: 0.5em Georgia,serif;
+    color: bisque;
+    background-color: transparent;
+    position: relative;
+    left : 20px;
+    bottom: -13px;
+    
+}
