@@ -996,3 +996,38 @@ if(navigator.serviceWorker){
     navigator.serviceWorker.register("serviceWorker.js")
 }
 
+
+//       COOKIES
+
+function nuevaFechaUTC(dias){
+    const vencimiento = new Date(Date.now()+dias*1000*60*60*24);
+    return vencimiento.toUTCString();
+}
+
+function crearOModCookie (nombre,dias){
+    let expiracion = nuevaFechaUTC(dias)
+    document.cookie = `${nombre};expires=${expiracion}`;
+}
+
+function obtenerCookie (nombreCookie){
+    let cookies = document.cookie;//crear variable cookie
+    cookies = cookies.split(";")//separarlos de los atributos en cada ";"
+    for(i=0;cookies.length>i;i++){
+        let cookie = cookies[i].trim();//para quitar posibles espacios en blanco y singularizar cookies.
+        if(cookie.startsWith(nombreCookie)){
+            console.log(cookie.split("=")[1])
+            console.log(cookie)
+            return cookie.split("=")[1]//parte clave=valor a la mitad, 0 = clave, 1 = valor;
+}}
+        return console.log("no hay cookies con ese nombre")
+}
+//para eliminar, agregar atributo max-age=0 antes de cerrar primeras "".
+//para modificar, mantener clave, cambiar valor.
+//IMPORTANTE: REVISAR RGPD Y ePrivacy!!!!
+
+
+//             OBJETO SCREEN
+let anchoPantalla = screen.pixelDepth// tb esta height, availWidth, availHeight, pixelDepth, colorDepth
+//innerHeight es el viewport
+//availHeight no considera interfaz
+console.log(anchoPantalla)
